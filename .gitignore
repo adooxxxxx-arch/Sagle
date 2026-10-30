@@ -1,4 +1,8 @@
 node_modules
 dist
-.env
 .netlify
+*.local
+.env
+.env.*
+!.env.example
+test-results
