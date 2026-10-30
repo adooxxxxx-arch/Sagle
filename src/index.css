@@ -1,0 +1,504 @@
+@import 'tailwindcss';
+
+/* ---------- Aether Glass design tokens ---------- */
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-serif: 'Iowan Old Style', 'Charter', 'Palatino Linotype', Georgia, serif;
+
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-hover: var(--hover);
+  --color-active: var(--active);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #090b10;
+  --bg-tint-1: rgba(64, 104, 160, 0.32);
+  --bg-tint-2: rgba(40, 112, 120, 0.16);
+  --bg-tint-3: rgba(120, 136, 170, 0.1);
+  --glass: rgba(20, 24, 32, 0.56);
+  --glass-strong: rgba(16, 19, 26, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.075);
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 10px 40px -16px rgba(0, 0, 0, 0.6);
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --hover: rgba(255, 255, 255, 0.055);
+  --active: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.13);
+  --fg: #e7ebf2;
+  --fg-2: #a2abba;
+  --fg-3: #6c7585;
+  --accent: #7fb0ff;
+  --accent-fg: #07101f;
+  --accent-soft: rgba(127, 176, 255, 0.14);
+  --ok: #5ad19a;
+  --warn: #e8c468;
+  --danger: #f2828a;
+  --page: #11141b;
+  --selection: rgba(127, 176, 255, 0.3);
+  --mark: rgba(232, 196, 104, 0.32);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #e9edf3;
+  --bg-tint-1: rgba(120, 160, 220, 0.42);
+  --bg-tint-2: rgba(110, 180, 190, 0.22);
+  --bg-tint-3: rgba(255, 255, 255, 0.7);
+  --glass: rgba(255, 255, 255, 0.58);
+  --glass-strong: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 10px 36px -18px rgba(30, 41, 59, 0.35);
+  --surface: rgba(15, 23, 42, 0.03);
+  --surface-2: rgba(15, 23, 42, 0.05);
+  --hover: rgba(15, 23, 42, 0.05);
+  --active: rgba(15, 23, 42, 0.085);
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.14);
+  --fg: #0f1623;
+  --fg-2: #4a5568;
+  --fg-3: #8a94a6;
+  --accent: #2f6fe0;
+  --accent-fg: #ffffff;
+  --accent-soft: rgba(47, 111, 224, 0.1);
+  --ok: #138a5a;
+  --warn: #9a6b00;
+  --danger: #c43c48;
+  --page: #ffffff;
+  --selection: rgba(47, 111, 224, 0.22);
+  --mark: rgba(234, 179, 8, 0.3);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* Ambient backdrop the glass layers sit on. Deliberately low-chroma. */
+.aether-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 12% 8%, var(--bg-tint-1), transparent 70%),
+    radial-gradient(50% 45% at 92% 88%, var(--bg-tint-2), transparent 70%),
+    radial-gradient(40% 40% at 70% 20%, var(--bg-tint-3), transparent 70%),
+    var(--bg);
+}
+
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(36px) saturate(160%);
+  backdrop-filter: blur(36px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 24px 64px -24px rgba(0, 0, 0, 0.55);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass,
+  .glass-strong {
+    background: var(--glass-strong);
+  }
+}
+
+.focus-ring:focus-visible,
+button:focus-visible,
+a:focus-visible,
+[role='tab']:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--line-strong);
+  color: var(--fg-2);
+  background: var(--surface);
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes aether-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes aether-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes aether-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes aether-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+@keyframes aether-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.anim-fade {
+  animation: aether-fade-in 160ms var(--ease-out-soft) both;
+}
+.anim-rise {
+  animation: aether-rise 220ms var(--ease-out-soft) both;
+}
+.anim-slide {
+  animation: aether-slide-left 220ms var(--ease-out-soft) both;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: aether-shimmer 1.4s linear infinite;
+  border-radius: 6px;
+}
+
+.progress-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  overflow: hidden;
+}
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: aether-progress 1.1s var(--ease-out-soft) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  .skeleton,
+  .progress-bar::after {
+    animation: none !important;
+  }
+}
+
+/* ---------- Reader typography ---------- */
+
+.reader {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--fg);
+  max-width: 68ch;
+  margin: 0 auto;
+  overflow-wrap: anywhere;
+}
+.reader[data-font='sans'] {
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+}
+.reader h1,
+.reader h2,
+.reader h3,
+.reader h4 {
+  font-family: var(--font-sans);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 1.6em 0 0.5em;
+  font-weight: 650;
+}
+.reader h1 {
+  font-size: 1.6em;
+}
+.reader h2 {
+  font-size: 1.3em;
+}
+.reader h3 {
+  font-size: 1.1em;
+}
+.reader p,
+.reader ul,
+.reader ol,
+.reader blockquote,
+.reader pre,
+.reader figure,
+.reader table {
+  margin: 0 0 1.05em;
+}
+.reader ul,
+.reader ol {
+  padding-left: 1.4em;
+}
+.reader ul {
+  list-style: disc;
+}
+.reader ol {
+  list-style: decimal;
+}
+.reader a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 3px;
+}
+.reader img,
+.reader video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.reader figcaption {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--fg-3);
+  margin-top: 6px;
+}
+.reader blockquote {
+  border-left: 2px solid var(--line-strong);
+  padding-left: 1em;
+  color: var(--fg-2);
+}
+.reader pre,
+.reader code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+}
+.reader pre {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.reader :not(pre) > code {
+  background: var(--surface-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.reader table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.reader th,
+.reader td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+}
+.reader hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2em 0;
+}
+.reader mark[data-aether-hl] {
+  background: var(--mark);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ---------- Markdown (AI + notes) ---------- */
+
+.md {
+  font-size: 13.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.md > * + * {
+  margin-top: 0.7em;
+}
+.md h1,
+.md h2,
+.md h3 {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin-top: 1.1em;
+}
+.md h1 {
+  font-size: 1.25em;
+}
+.md h2 {
+  font-size: 1.12em;
+}
+.md h3 {
+  font-size: 1em;
+}
+.md ul {
+  list-style: disc;
+  padding-left: 1.3em;
+}
+.md ol {
+  list-style: decimal;
+  padding-left: 1.3em;
+}
+.md li + li {
+  margin-top: 0.25em;
+}
+.md a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.md code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface-2);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+.md pre {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+}
+.md pre code {
+  background: none;
+  padding: 0;
+}
+.md table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  font-size: 12.5px;
+}
+.md th,
+.md td {
+  border: 1px solid var(--line-strong);
+  padding: 5px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.md th {
+  background: var(--surface-2);
+  font-weight: 600;
+}
+.md blockquote {
+  border-left: 2px solid var(--line-strong);
+  padding-left: 0.8em;
+  color: var(--fg-2);
+}
+.md .cite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35em;
+  height: 1.35em;
+  padding: 0 0.3em;
+  margin: 0 1px;
+  font-size: 0.72em;
+  font-weight: 600;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  text-decoration: none;
+  vertical-align: 0.15em;
+}
