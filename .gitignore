@@ -1,8 +1,0 @@
-node_modules
-dist
-.netlify
-*.local
-.env
-.env.*
-!.env.example
-test-results
