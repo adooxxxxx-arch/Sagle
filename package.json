@@ -1,0 +1,8 @@
+{
+  "name": "build-your-country",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Operating kit for the Build Your Country TikTok nation-building experiment",
+  "scripts": { "nation": "node tools/nation.mjs" }
+}

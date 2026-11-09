@@ -1,0 +1,17 @@
+{
+  "name": null,
+  "day": 1,
+  "followers": 0,
+  "treasury": 0,
+  "currency": null,
+  "government": null,
+  "settlements": [],
+  "buildings": [],
+  "symbols": {
+    "flag": null,
+    "anthem": null,
+    "motto": null,
+    "animal": null
+  },
+  "stage": 1
+}

@@ -1,0 +1,24 @@
+{
+  "polls": [
+    {
+      "id": 1,
+      "day": 1,
+      "question": "Where should our first settlement be?",
+      "options": [
+        "River valley",
+        "Mountain foothills",
+        "Coast"
+      ],
+      "status": "open",
+      "opened": "2026-11-09T16:30:20.224Z"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-09T16:30:20.078Z",
+      "day": 1,
+      "text": "Population snapshot: 0"
+    }
+  ],
+  "citizens": []
+}
